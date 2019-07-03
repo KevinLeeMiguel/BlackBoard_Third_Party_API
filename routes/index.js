@@ -38,18 +38,23 @@ router.post('/upload', (req, res) => {
 
 router.get('/students/:id', (req, res) => {
   var rs = {};
-  Student.find({studentId:req.params.id}, function (err, student) {
-    if(err){
+  Student.find({ studentId: req.params.id }, function (err, student) {
+    if (err) {
       console.log(err);
       rs.code = 300;
       rs.description = err;
       rs.object = null;
       res.json(rs).status(200);
-    }else{
+    } else {
       rs.code = 200;
-      rs.description = "success";
-      rs.object = student[0];
-       res.json(rs).status(200);
+      if (student[0]){
+        rs.description = "success";
+        rs.object = student[0];
+      }else{
+        rs.description = "student not found",
+        rs.object = null;
+      }
+      res.json(rs).status(200);
     }
   })
 });
@@ -73,18 +78,18 @@ router.post('/student/save', (req, res) => {
         columnToKey: {
           A: 'id',
           B: 'names',
-          C:'email'
+          C: 'email'
         }
       });
       var sts = [];
       result.Sheet1.forEach(student => {
         var st = new Student({
-          studentId:student.id,
-          names:student.names,
-          email:student.email
+          studentId: student.id,
+          names: student.names,
+          email: student.email
         });
-        Student.create(st, function (err,student) {
-          if(err){
+        Student.create(st, function (err, student) {
+          if (err) {
             console.log(err);
           }
           // res.send(success);
