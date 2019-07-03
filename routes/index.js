@@ -47,7 +47,7 @@ router.get('/students/:id', (req, res) => {
   })
 });
 
-router.post('/students/save', (req, res) => {
+router.post('/student/save', (req, res) => {
   if (Object.keys(req.files).length == 0) {
     return res.status(400).send('No files were uploaded.');
   }
