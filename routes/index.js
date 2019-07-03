@@ -37,12 +37,19 @@ router.post('/upload', (req, res) => {
 });
 
 router.get('/students/:id', (req, res) => {
+  var rs = {};
   Student.find({studentId:req.params.id}, function (err, student) {
     if(err){
       console.log(err);
-      res.send("student not found");
+      rs.code = 300;
+      rs.description = err;
+      rs.object = null;
+      res.json(rs).status(200);
     }else{
-       res.json(student).status(200);
+      rs.code = 200;
+      rs.description = "success";
+      rs.object = student[0];
+       res.json(rs).status(200);
     }
   })
 });
