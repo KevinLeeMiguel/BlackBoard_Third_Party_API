@@ -47,7 +47,7 @@ router.get('/students/:id', (req, res) => {
   })
 });
 
-router.post('/students/save', (req, res) => {
+router.post('/student/save', (req, res) => {
   if (Object.keys(req.files).length == 0) {
     return res.status(400).send('No files were uploaded.');
   }
@@ -56,13 +56,13 @@ router.post('/students/save', (req, res) => {
   let sampleFile = req.files.file;
 
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('../fileupload/public/assets/uploaded-files/' + req.files.file.name, function (err) {
+  sampleFile.mv('public/assets/uploaded-files/' + req.files.file.name, function (err) {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
     } else {
       const result = excelToJson({
-        sourceFile: '../fileupload/public/assets/uploaded-files/' + req.files.file.name,
+        sourceFile: 'public/assets/uploaded-files/' + req.files.file.name,
         columnToKey: {
           A: 'id',
           B: 'names',
