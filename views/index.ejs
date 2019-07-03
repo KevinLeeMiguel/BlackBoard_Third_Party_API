@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <style>
+    img{
+      width: 30%
+    }
+  </style>
+</head>
+
+<body>
+  <form ref='uploadForm' id='uploadForm' action='/students/save' method='post' encType="multipart/form-data">
+    <input type="file" name="file" id="imgInp" />
+    <input type='submit' value='Upload!' />
+    <img id="image-preview" src="#">
+  </form>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+  // function readURL(input) {
+
+  //   if (input.files && input.files[0]) {
+  //     var reader = new FileReader();
+
+  //     reader.onload = function (e) {
+  //       $('#image-preview').attr('src', e.target.result);
+  //     }
+
+  //     reader.readAsDataURL(input.files[0]);
+  //   }
+  // }
+
+  // $("#imgInp").change(function () {
+  //   readURL(this);
+  // });
+</script>
+
+</html>
