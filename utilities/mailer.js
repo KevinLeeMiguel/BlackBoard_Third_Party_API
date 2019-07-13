@@ -10,7 +10,10 @@ mailer.sendMail = function mail(email, msg, sbj) {
         auth: {
             user: 'auca.user.blackboard@gmail.com',
             pass: 'black123123'
-        }
+        },
+        tls: {
+          rejectUnauthorized: false
+      }
     });
     let mailOptions = {
         from: 'BlackBoard', // sender address
