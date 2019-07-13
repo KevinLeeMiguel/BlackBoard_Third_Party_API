@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const excelToJson = require('convert-excel-to-json');
-var Student = require('../models/Student.js')
+var Student = require('../models/Student.js');
+var mailer = require('../utilities/mailer');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -47,12 +48,12 @@ router.get('/students/:id', (req, res) => {
       res.json(rs).status(200);
     } else {
       rs.code = 200;
-      if (student[0]){
+      if (student[0]) {
         rs.description = "success";
         rs.object = student[0];
-      }else{
+      } else {
         rs.description = "student not found",
-        rs.object = null;
+          rs.object = null;
       }
       res.json(rs).status(200);
     }
@@ -101,6 +102,15 @@ router.post('/student/save', (req, res) => {
       // res.json(result.Sheet1);
     }
   });
+});
+
+router.post('/mail/send', async (req, res) => {
+  var to = req.body.to;
+  var subj = req.body.subject;
+  var html = req.body.html;
+
+  mailer.sendMail(to, html, subj);
+   res.json("success").status(200);
 });
 
 module.exports = router;
