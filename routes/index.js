@@ -139,7 +139,7 @@ router.post('/json2csv', (req, res) => {
         console.log(err);
       }else{
         var csvs = csv; 
-         res.json(csvs).sendStatus(200);
+         res.json(csvs).status(200);
       }
     })
 });
