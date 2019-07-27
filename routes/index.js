@@ -3,6 +3,7 @@ var router = express.Router();
 const excelToJson = require('convert-excel-to-json');
 var Student = require('../models/Student.js');
 var mailer = require('../utilities/mailer');
+var conv = require("json-2-csv");
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -110,7 +111,37 @@ router.post('/mail/send', async (req, res) => {
   var html = req.body.html;
 
   mailer.sendMail(to, html, subj);
-   res.json("success").status(200);
+  res.json("success").status(200);
+});
+
+router.get('/students', (req, res) => {
+  var rs = {};
+  Student.find({}, function (err, students) {
+    if (err) {
+      console.log(err);
+      rs.code = 300;
+      rs.description = err;
+      rs.object = null;
+      res.json(rs).status(200);
+    } else {
+      rs.code = 200;
+      rs.description = "success";
+      rs.object = students;
+      res.json(rs).status(200);
+    }
+  })
+});
+
+router.post('/json2csv', (req, res) => {
+    var data = req.body.data;
+    conv.json2csv(data,(err,csv)=>{
+      if(err){
+        console.log(err);
+      }else{
+        var csvs = csv; 
+         res.json(csvs).sendStatus(200);
+      }
+    })
 });
 
 module.exports = router;
